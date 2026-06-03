@@ -9,16 +9,16 @@ interface OverlayProps {
 
 export default function Overlay({ scrollYProgress }: OverlayProps) {
   // Section 1: 0% to 15%
-  const opacity1 = useTransform(scrollYProgress, [0, 0.05, 0.15], [1, 1, 0]);
-  const y1 = useTransform(scrollYProgress, [0, 0.15], [0, -100]);
+  const opacity1 = useTransform(scrollYProgress, [0, 0.05, 0.15, 1], [1, 1, 0, 0]);
+  const y1 = useTransform(scrollYProgress, [0, 0.15, 1], [0, -100, -100]);
 
   // Section 2: 15% to 45%
-  const opacity2 = useTransform(scrollYProgress, [0.15, 0.25, 0.35, 0.45], [0, 1, 1, 0]);
-  const y2 = useTransform(scrollYProgress, [0.15, 0.25, 0.45], [100, 0, -100]);
+  const opacity2 = useTransform(scrollYProgress, [0, 0.14, 0.15, 0.25, 0.35, 0.45, 1], [0, 0, 0, 1, 1, 0, 0]);
+  const y2 = useTransform(scrollYProgress, [0, 0.15, 0.25, 0.45, 1], [100, 100, 0, -100, -100]);
 
   // Section 3: 45% to 75%
-  const opacity3 = useTransform(scrollYProgress, [0.45, 0.55, 0.65, 0.75], [0, 1, 1, 0]);
-  const y3 = useTransform(scrollYProgress, [0.45, 0.55, 0.75], [100, 0, -100]);
+  const opacity3 = useTransform(scrollYProgress, [0, 0.44, 0.45, 0.55, 0.65, 0.75, 1], [0, 0, 0, 1, 1, 0, 0]);
+  const y3 = useTransform(scrollYProgress, [0, 0.45, 0.55, 0.75, 1], [100, 100, 0, -100, -100]);
 
   const [isMounted, setIsMounted] = useState(false);
   useEffect(() => {

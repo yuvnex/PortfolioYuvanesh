@@ -4,8 +4,8 @@ import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function Navbar() {
   const { scrollY } = useScroll();
-  // Fade out the quote after scrolling 100px
-  const quoteOpacity = useTransform(scrollY, [0, 100], [0.9, 0]);
+  // Fade out the quote after scrolling 100px and strictly force it to 0 forever after
+  const quoteOpacity = useTransform(scrollY, [0, 100, 10000], [0.9, 0, 0]);
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center px-6 md:px-12 py-6 pointer-events-auto mix-blend-difference">
