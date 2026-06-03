@@ -80,8 +80,8 @@ export default function ScrollyCanvas() {
       offsetY = (canvas.height - drawHeight) * 0.15;
     } else {
       drawWidth = canvas.height * imgRatio;
-      // Use standard 0.5 to perfectly center the video frame itself, accommodating natural movement
-      offsetX = (canvas.width - drawWidth) * 0.5;
+      // 0.5 is too far right, 0.55 is too far left. 0.525 is the exact middle point.
+      offsetX = (canvas.width - drawWidth) * 0.525;
     }
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
