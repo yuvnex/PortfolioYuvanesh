@@ -80,8 +80,19 @@ export default function ScrollyCanvas() {
       offsetY = (canvas.height - drawHeight) * 0.15;
     } else {
       drawWidth = canvas.height * imgRatio;
-      // 0.5 is too far right, 0.55 is too far left. 0.525 is the exact middle point.
-      offsetX = (canvas.width - drawWidth) * 0.525;
+      
+      // Dynamic Mobile Camera Tracking:
+      // The subject sways naturally during the video. We smoothly pan the cropped area
+      // to keep the face dead-center on narrow mobile screens as the sequence plays.
+      let panMultiplier = 0.5;
+      if (roundedIndex <= 60) {
+        // Start at 0.55 (centered for frame 0) and smoothly pan to 0.5 (centered for frame 60+)
+        panMultiplier = 0.55 - ((roundedIndex / 60) * 0.05);
+      } else {
+        panMultiplier = 0.5;
+      }
+      
+      offsetX = (canvas.width - drawWidth) * panMultiplier;
     }
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
