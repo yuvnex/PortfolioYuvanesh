@@ -80,8 +80,8 @@ export default function ScrollyCanvas() {
       offsetY = (canvas.height - drawHeight) * 0.15;
     } else {
       drawWidth = canvas.height * imgRatio;
-      // 0.5 was too far right, 0.7 was too far left. 0.6 perfectly centers the face.
-      offsetX = (canvas.width - drawWidth) * 0.6;
+      // 0.5 was too far right, 0.6 was slightly too far left. 0.55 perfectly centers the face.
+      offsetX = (canvas.width - drawWidth) * 0.55;
     }
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
