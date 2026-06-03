@@ -11,6 +11,7 @@ export default function ScrollyCanvas() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [images, setImages] = useState<HTMLImageElement[]>([]);
   const [loaded, setLoaded] = useState(false);
+  const lastDrawnIndex = useRef<number>(-1);
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -51,12 +52,18 @@ export default function ScrollyCanvas() {
 
   const drawFrame = (index: number) => {
     if (!canvasRef.current || images.length === 0) return;
+    
+    const roundedIndex = Math.round(index);
+    if (roundedIndex === lastDrawnIndex.current) return;
+    
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const img = images[Math.round(index)];
+    const img = images[roundedIndex];
     if (!img) return;
+
+    lastDrawnIndex.current = roundedIndex;
 
     // Object-fit: cover logic
     const canvasRatio = canvas.width / canvas.height;
@@ -77,15 +84,13 @@ export default function ScrollyCanvas() {
     }
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // Use slightly better quality for image rendering
     ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = "high";
     ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
   };
 
   useMotionValueEvent(frameIndex, "change", (latest) => {
     if (loaded) {
-      requestAnimationFrame(() => drawFrame(latest));
+      drawFrame(latest);
     }
   });
 

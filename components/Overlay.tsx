@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, MotionValue, useTransform } from "framer-motion";
+import { useEffect, useState } from "react";
 
 interface OverlayProps {
   scrollYProgress: MotionValue<number>;
@@ -18,6 +19,15 @@ export default function Overlay({ scrollYProgress }: OverlayProps) {
   // Section 3: 60% to 80%
   const opacity3 = useTransform(scrollYProgress, [0.5, 0.6, 0.7, 0.8], [0, 1, 1, 0]);
   const y3 = useTransform(scrollYProgress, [0.5, 0.6, 0.8], [50, 0, -50]);
+
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <div className="absolute inset-0 w-full h-full flex flex-col justify-center items-center p-8 pointer-events-none z-10 text-white">
