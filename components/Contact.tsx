@@ -25,7 +25,7 @@ export default function Contact() {
               +91 6379988358
             </a>
             <div className="flex gap-6 mt-8 pt-8 border-t border-white/10">
-              <a href="https://github.com/yuvanesh26" target="_blank" className="text-white/60 hover:text-white transition-colors text-lg">GitHub</a>
+              <a href="https://github.com/yuvnex" target="_blank" className="text-white/60 hover:text-white transition-colors text-lg">GitHub</a>
               <a href="https://linkedin.com/in/yuvnex" target="_blank" className="text-white/60 hover:text-white transition-colors text-lg">LinkedIn</a>
               <a href="https://yuvaneshportfolio.vercel.app" target="_blank" className="text-white/60 hover:text-white transition-colors text-lg">Website</a>
             </div>
