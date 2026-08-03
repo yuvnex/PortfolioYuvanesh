@@ -8,9 +8,6 @@ Passionate about solving problems, building projects, and continuously learning 
 
 Java • MySQL • HTML • CSS • JavaScript • Git
 
-## Fun Fact
-
-🧩 I see coding problems as puzzles—the harder they are, the more exciting they become.
 
 ## Quote
 
