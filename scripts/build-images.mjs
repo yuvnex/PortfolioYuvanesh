@@ -1,16 +1,15 @@
-// Builds optimized portrait assets from the original photos in the project root.
-// pic1.jpeg = high-resolution source, pic.png = background-removed cutout (same framing).
-// The cutout's alpha mask is upscaled and applied to the high-res photo so the face stays sharp.
+// Builds optimized portrait assets from p1.jpeg and pp1.png in the project root.
+// p1.jpeg = high-resolution source photo, pp1.png = background-removed cutout.
 import sharp from 'sharp';
 import { mkdirSync } from 'node:fs';
 
 const OUT = 'public/assets';
 mkdirSync(OUT, { recursive: true });
 
-const hi = sharp('pic1.jpeg');
+const hi = sharp('p1.jpeg');
 const { width, height } = await hi.metadata();
 
-const alpha = await sharp('pic.png')
+const alpha = await sharp('pp1.png')
   .ensureAlpha()
   .extractChannel('alpha')
   .resize(width, height, { kernel: 'lanczos3' })
@@ -18,7 +17,7 @@ const alpha = await sharp('pic.png')
   .raw()
   .toBuffer();
 
-const rgb = await sharp('pic1.jpeg').removeAlpha().raw().toBuffer();
+const rgb = await sharp('p1.jpeg').removeAlpha().raw().toBuffer();
 const rgba = Buffer.alloc(width * height * 4);
 for (let i = 0; i < width * height; i++) {
   rgba[i * 4] = rgb[i * 3];
@@ -45,9 +44,9 @@ await sharp({ create: { width: 1200, height: 630, channels: 4, background: '#070
     { input: portrait, gravity: 'southeast' },
     {
       input: Buffer.from(`<svg width="1200" height="630" xmlns="http://www.w3.org/2000/svg">
-        <text x="72" y="300" font-family="Impact, 'Arial Narrow', sans-serif" font-size="128" fill="#f4f1ec" letter-spacing="4">SUSHMITA</text>
+        <text x="72" y="300" font-family="Impact, 'Arial Narrow', sans-serif" font-size="128" fill="#f4f1ec" letter-spacing="4">YUVANESH</text>
         <text x="78" y="352" font-family="Helvetica, Arial, sans-serif" font-weight="700" font-size="26" fill="#ff3d5a" letter-spacing="16">THE SERIES</text>
-        <text x="78" y="420" font-family="Helvetica, Arial, sans-serif" font-weight="600" font-size="18" fill="#a7a6ad" letter-spacing="5">FULL-STACK DEVELOPER • AI / ML • JAVA</text>
+        <text x="78" y="420" font-family="Helvetica, Arial, sans-serif" font-weight="600" font-size="18" fill="#a7a6ad" letter-spacing="5">SOFTWARE DEVELOPER • FASTAPI • REACT • JAVA</text>
       </svg>`),
     },
   ])

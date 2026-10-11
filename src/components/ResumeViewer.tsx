@@ -38,13 +38,21 @@ export default function ResumeSection({ onView }: { onView: () => void }) {
             <Magnetic className="w-full">
               <a
                 href={profile.resumePdf}
-                download="Sushmita_Dasari_Resume.pdf"
+                download="Yuvanesh_P_Resume.pdf"
                 data-cursor="link"
                 className="glass flex min-h-12 w-full items-center justify-center gap-2 rounded-md px-6 text-[15px] font-semibold text-bone transition hover:bg-white/15"
               >
                 ⤓ Download Resume
               </a>
             </Magnetic>
+            <a
+              href={profile.resumePdf}
+              target="_blank"
+              rel="noreferrer"
+              className="mt-1 text-center text-xs font-medium text-mist transition hover:text-bone hover:underline"
+            >
+              Open uploaded PDF in new tab ↗
+            </a>
           </div>
           <dl className="mt-8 grid grid-cols-3 gap-px overflow-hidden rounded-xl bg-white/10 text-center">
             {[
@@ -95,18 +103,21 @@ export function ResumeSheet() {
         <div>
           <p className="text-[10px] font-bold tracking-[0.34em] text-smoke">STARRING</p>
           <h3 className="mt-1 font-display text-[clamp(1.9rem,4.4vw,3.2rem)] leading-[0.9] tracking-wide text-bone">{profile.fullName}</h3>
+          <p className="mt-1 text-xs text-mist">{profile.role} · {profile.location}</p>
         </div>
         <div className="text-xs leading-relaxed text-mist sm:text-right">
-          <a href={`mailto:${profile.email}`} className="block hover:text-bone">
-            {profile.email}
-          </a>
-          <a href={profile.links.linkedin} target="_blank" rel="noreferrer" className="hover:text-bone">
-            LinkedIn ↗
-          </a>
-          {' · '}
-          <a href={profile.links.github} target="_blank" rel="noreferrer" className="hover:text-bone">
-            GitHub ↗
-          </a>
+          <p className="text-bone/90">{profile.phone} · <a href={`mailto:${profile.email}`} className="hover:text-bone underline underline-offset-2">{profile.email}</a></p>
+          <div className="mt-1 flex flex-wrap gap-x-2 sm:justify-end">
+            <a href={profile.links.linkedin} target="_blank" rel="noreferrer" className="hover:text-bone">LinkedIn ↗</a>
+            <span>·</span>
+            <a href={profile.links.github} target="_blank" rel="noreferrer" className="hover:text-bone">GitHub ↗</a>
+            <span>·</span>
+            <a href={profile.links.leetcode} target="_blank" rel="noreferrer" className="hover:text-bone">LeetCode ↗</a>
+            <span>·</span>
+            <a href={profile.links.geeksforgeeks} target="_blank" rel="noreferrer" className="hover:text-bone">GFG ↗</a>
+            <span>·</span>
+            <a href={profile.links.codolio} target="_blank" rel="noreferrer" className="hover:text-bone">Codolio ↗</a>
+          </div>
         </div>
       </header>
 
@@ -140,7 +151,20 @@ export function ResumeSheet() {
                 {x.points.map((p) => (
                   <li key={p} className="flex gap-2 text-xs leading-relaxed text-mist">
                     <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-crimson-2" />
-                    {p}
+                    <span>
+                      {p.includes('[View Certificate]') ? (
+                        <>
+                          Official certificate verifying successful completion and achievement.{' '}
+                          {x.certificate && (
+                            <a href={x.certificate} target="_blank" rel="noreferrer" className="font-semibold text-crimson-2 hover:underline">
+                              [View Certificate] ↗
+                            </a>
+                          )}
+                        </>
+                      ) : (
+                        p
+                      )}
+                    </span>
                   </li>
                 ))}
               </ul>
@@ -151,7 +175,19 @@ export function ResumeSheet() {
           {projects.map((p) => (
             <div key={p.id} className="mb-3">
               <div className="flex flex-wrap justify-between gap-x-3">
-                <p className="text-sm font-semibold text-bone">{p.title}</p>
+                <p className="text-sm font-semibold text-bone">
+                  {p.title}
+                  {p.live && (
+                    <a href={p.live} target="_blank" rel="noreferrer" className="ml-2 text-xs font-normal text-crimson-2 hover:underline">
+                      [{p.liveLabel ?? 'Live'}] ↗
+                    </a>
+                  )}
+                  {p.github && (
+                    <a href={p.github} target="_blank" rel="noreferrer" className="ml-2 text-xs font-normal text-mist hover:underline">
+                      [GitHub] ↗
+                    </a>
+                  )}
+                </p>
                 <p className="text-xs text-smoke">{p.year}</p>
               </div>
               <p className="text-xs text-mist">{p.stack.join(', ')}</p>
@@ -178,16 +214,28 @@ export function ResumeSheet() {
                   {a.title} — {a.org}.
                 </span>{' '}
                 {a.detail}
+                {a.link && (
+                  <a href={a.link} target="_blank" rel="noreferrer" className="ml-1 font-semibold text-crimson-2 hover:underline">
+                    [Link] ↗
+                  </a>
+                )}
               </li>
             ))}
           </ul>
 
           <H>Certifications</H>
-          <p className="text-xs leading-relaxed text-mist">
-            {Array.from(new Set(certifications.map((c) => c.issuer)))
-              .map((iss) => `${iss}: ${certifications.filter((c) => c.issuer === iss).map((c) => c.name).join(', ')}`)
-              .join(' · ')}
-          </p>
+          <ul className="space-y-2">
+            {certifications.map((c) => (
+              <li key={c.name} className="text-xs leading-relaxed text-mist">
+                <span className="font-semibold text-bone">{c.name}</span> — {c.issuer}
+                {c.link && c.link !== '#' && (
+                  <a href={c.link} target="_blank" rel="noreferrer" className="ml-1 font-semibold text-crimson-2 hover:underline">
+                    [View Credential] ↗
+                  </a>
+                )}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </article>
