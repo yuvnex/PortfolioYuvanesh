@@ -78,7 +78,6 @@ src/
 scripts/build-images.mjs   ← portrait/share-image pipeline (sharp)
 ```
 
-**Stack:** React 18, TypeScript, Vite 6, Tailwind CSS 4, Framer Motion 11, Lenis.
 
 ## Accessibility and performance
 
